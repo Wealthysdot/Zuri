@@ -1,6 +1,8 @@
-from budgetApp import Budget
+from budgetApp.budgetApp import Budget
 
 start = Budget("budget")
+expenses = Budget("exp")
+transfer = Budget("trans")
 
 
 def init():
@@ -16,12 +18,14 @@ def init():
 
     if to_do == 1:
         start.calc_cat_budget_amount()
-    #     Todo optional expenses
+    #
+
 
     elif to_do == 2:
-     #    Todo compulsory expense
+     expenses.enter_expenses()
      #    Todo optional budget
     elif to_do == 3:
+        transfer.transfer_funds()
 
     else:
         print("You have selected invalid option")
@@ -29,4 +33,4 @@ def init():
 
 
 
-P
+
