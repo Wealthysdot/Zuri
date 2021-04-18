@@ -1,9 +1,8 @@
-from initails import money_at_hand
+from initails import *
 
 
 class Budget:
     category_balance = list()
-    cat = dict()
 
     def __init__(self, name):
         self.name = name
@@ -50,8 +49,6 @@ class Budget:
         total_deposit = 0
         for item in self.depositExpenses:
             total_deposit += item["Deposit_Amount"]
-            if total_deposit > self.compute_category_balance():
-                print("You have exceeded you budget for this category")
         return total_deposit
 
     def total_withdrawal_expenses(self):
@@ -62,14 +59,10 @@ class Budget:
 
     def display_deposit_expenses(self):
         print(f"\n********Total Deposit Expense********")
-        total_category_expense = 0
         for item in self.depositExpenses:
             expenses_desc = item["Budget Description"]
             expenses_amount = item["Deposit_Amount"]
             print(f"{expenses_desc}: {expenses_amount}")
-            total_category_expense += expenses_amount
-            if total_category_expense >= money_at_hand:
-                break
         print(f"Your Total Deposit Expenses is : {self.total_deposit_expenses()}")
 
     def display_withdrawal_expenses(self):
@@ -105,32 +98,3 @@ class Budget:
     def total_balance(self):
         total_balance = self.money_at_hand - Budget.compute_category_balance()
         return total_balance
-
-    @staticmethod
-    def enter_cat(cat_name, cat_budget_amount):
-        Budget.cat.update({cat_name: cat_budget_amount})
-
-    def calc_cat_budget_amount(self):
-        # self.money_at_hand = int(input("Please Enter amount for total budget \n"))
-        total_cat_budget = 0
-        while self.money_at_hand > 0:
-            name = input("enter budget category name")
-            amount = int(input(f"enter {name} budget amount"))
-            Budget.enter_cat(name, amount)
-            total_cat_budget = total_cat_budget + Budget.cat.get(name)
-            if self.money_at_hand <= total_cat_budget:
-                print("You have made your budget \n"
-                      "Please spend your money wisely ")
-                break
-        return total_cat_budget
-
-    def enter_expenses(self):
-        if Budget.cat.__len__() != 0:
-            cat_expenses = dict()
-            for name in Budget.cat:
-                expense = input(f"enter expense for {name}")
-                while cat_expenses.get(name) > Budget.cat.get(name):
-                    expense = input(f"enter expense for {name}")
-                cat_expenses.update({name: expense})
-        else:
-            print("You have not made a budget")
